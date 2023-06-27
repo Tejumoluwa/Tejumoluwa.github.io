@@ -28,7 +28,7 @@ def stake():
 # play the game: if player's number > the computer's number, player wins. Else he loses
 def play_game(player_1, player_2):
     computer = "computer"
-    if player_2 != 2:
+    if player_2 == "2":
         player_1_dice = input("Type y to roll your dice: ").lower()
         if player_1_dice == 'y':
             player_1_num = random_number(1, 6)
