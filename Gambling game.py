@@ -1,5 +1,15 @@
 from random import randint as random_number
-
+def main():
+    player_list = player_detail()
+    player_1 = player_list[0]
+    player_2 = player_list[1]
+    player_1_bet = stake()
+    if player_2 == "2":
+        player_2_bet = None
+    else:
+        player_2_bet = stake()
+    fate = play_game(player_1, player_2)
+    player_fate(fate, player_1_bet, player_2_bet, player_1, player_2)
 
 # Create the player's as player_1, player_2, computer
 def player_detail():
@@ -21,7 +31,7 @@ def stake():
         print("Try again")
         stake_amount = int(input("Type 5 for $5, 7 for $7 and 10 for $10: "))
     if stake_amount in stake:
-        print(f"Your bet is {stake_amount}")
+        print(f"Your bet is ${stake_amount}")
     return stake_amount
 
 
@@ -49,26 +59,37 @@ def play_game(player_1, player_2):
             player_2_num = random_number(1, 6)
             print(f"{player_2} played {player_2_num}")
         if player_1_num > player_2_num :
-            return "win", player_1
-        elif player_2_num > player_1_num:
-            return "lose", player_2
+            player_won = player_1
+            player_lost = player_2
+        else:
+            player_won = player_2
+            player_lost = player_1
+        return ["win", player_won],["lose", player_lost]
+
 
 
 # If player wins: he is to be awarded double the price
-def player_fate(fate, bet):
-    if fate[0] == "win" or fate == "win":
-        print("Your win and your earnings are $", bet*2)
-    elif fate[0] == "lose" or fate == 'lose':
-        print(f"You lose ${bet}")
+def player_fate(fate, player_1_bet, player_2_bet, player_1, player_2):
+    if not player_2_bet:
+        if fate == "win":
+            print("Your win and your earnings are $", player_1_bet * 2)
+        elif fate == 'lose':
+            print(f"You lose ${player_1_bet}")
+    else:
+        if fate[0][0] == "win":
+            if fate[0][1] == player_1:
+                print(f"{fate[0][1]} won and your earnings are ${player_1_bet*2}")
+            else:
+                print(f"{fate[0][1]} won and your earnings are ${player_2_bet*2}")
+        else:
+            if fate[1][1] == player_1:
+                print(f"{fate[0][1]} lost and you lose ${player_1_bet}")
+            else:
+                print(f"{fate[1][1]} lost and you lose ${player_2_bet}")
 # If the user wants to keep playing
 
 # Main code
-player_list = player_detail()
-player_1 = player_list[0]
-player_2 = player_list[1]
-bet = stake()
-fate = play_game(player_1, player_2)
-player_fate(fate, bet)
+main()
 
 
 
