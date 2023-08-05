@@ -1,4 +1,8 @@
 def main():
+    """
+    main function
+    
+    """
     sender = Customer("uba", "2234567890", 200000, 5678, "08012345678")
     USSD = input("USSD: ").strip()
     if USSD == "*375#":
@@ -31,6 +35,10 @@ class Customer:
         self.phone_number = phone_number
     
     def check_balance(self):
+        """
+        Checks the balance of the customer
+
+        """
         # Input sender's password
         input_password = int(input("Password: "))
         if input_password == self.password:
@@ -38,20 +46,24 @@ class Customer:
         else: 
             print("Incorrect password")
 
-    def send_money(self, yinka):
+    def send_money(self, receiver):
+        """
+        Sends a specified amount to a receiver
+        
+        """
         # Input receiver's bank
         user_bank = input("Bank: ").lower().strip()
-        if user_bank == yinka.bank:
+        if user_bank == receiver.bank:
             # Input receiver's account number
             input_account_nu = input("Account Number: ").strip()
-            if input_account_nu == yinka.account_no:
+            if input_account_nu == receiver.account_no:
                 # Input sender's password
                 input_password = int(input("Password: "))
                 if input_password == self.password:
                     amount = int(input("Amount to be transfered: "))
                     if amount < self.balance:
                         self.balance -= amount
-                        yinka.balance += amount
+                        receiver.balance += amount
                         print("Transfer was successful")
                     else:
                         raise ValueError("Insufficient balance")
@@ -63,6 +75,10 @@ class Customer:
             raise ValueError("Transfer was unsuccesful")
     
     def purchase_airtime(self):
+        """
+        Purchases airtime either 
+        for the user or for someone else
+        """
         user_bank = input("Bank: ").lower().strip()
         if user_bank == self.bank:
             input_password = int(input("Password: "))
