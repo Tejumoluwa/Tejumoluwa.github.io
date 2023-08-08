@@ -1,3 +1,4 @@
+import re
 def main():
     """
     main function
@@ -81,9 +82,11 @@ class Customer:
         """
         user_bank = input("Bank: ").lower().strip()
         if user_bank == self.bank:
-            input_password = int(input("Password: "))
+            input_password = eval(input("Password: "))
             if input_password == self.password:
-                airtime = int(input("Airtime amount: "))
+                airtime = eval(input("Airtime amount: "))
+            else:
+                raise ValueError("Incorrect Password")
         receiver = input("Type 1, if you are purchasing for yourself or 2, for someone else: ").strip()
         if receiver == "1":
             if airtime < self.balance:
@@ -93,12 +96,14 @@ class Customer:
                 raise ValueError("Insufficient balance")
         elif receiver == "2":
             input_phone_no = input("Phone number: ").strip()
-            if len(input_phone_no) == 11:
+            if len(input_phone_no) == 11 and re.search(r"^0(7-9)(0-1)[0-9]+$", input_phone_no):
                 if airtime < self.balance:
                     self.balance -= airtime
                     print("You have succesfully recharged")
                 else:
                     raise ValueError("Insufficient balance")
+            else:
+                raise ValueError("Invalid Phonenumber")
         else:
             print("Invalid input")
 
