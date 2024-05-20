@@ -1,0 +1,72 @@
+create database Luminous;
+use Luminous;
+create table Customer(
+    customerId int  primary key auto_increment,
+    fistname varchar(100),
+    lastname varchar(100),
+    dob date ,
+    gender varchar(10),
+    contactNumber varchar(15),
+    address varchar(100),
+    email varchar(50)
+);
+create table Account(
+    accountNumber varchar(15) primary key,
+    customerId int,
+    FOREIGN KEY(customerId) references Customer(customerId),
+    accountType varchar(20),
+    balance double,
+    openDate date
+);
+create Table Employee(
+    employeeId int primary key auto_increment,
+    firstName varchar(20),
+    lastName varchar(20),
+    position varchar(20),
+    contactNumber varchar(15)
+  );
+create table Transaction(
+    transactionId int primary key auto_increment,
+    accountNumber varchar(15),
+    FOREIGN KEY (accountNumber) references Account(accountNumber),
+    transactionType varchar(20),
+    amount double,
+    transactionDate date
+);
+create table Branch(
+    branchId int primary key auto_increment,
+    branchName varchar(20),
+    location varchar(50),
+    managerId int,
+    FOREIGN KEY (managerId) references Employee(employeeId)
+);
+
+create table Loan(
+    customerId int,
+    foreign key (customerId) references Customer(customerId),
+    loanAmount double,
+    interestRate double,
+    startDate date,
+    endDate date
+);
+create table creditCard(
+    cardNumber int primary key,
+    customerId int,
+    foreign key (customerId) references Customer(customerId),
+    cardType varchar(100),
+    creditLimit double,
+    expiryDate date
+);
+create table ATM(
+    atmId int primary key auto_increment,
+    location varchar(20)
+);
+create table Bank(
+    bankId int primary key auto_increment,
+    bankName varchar(20),
+    location varchar(100)
+);
+create table InterestRate(
+    productType varchar(100),
+    interestRate double
+)
